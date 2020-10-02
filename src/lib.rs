@@ -1,11 +1,35 @@
 use std::fs;
-use std::path::PathBuf;
-use dirs::home_dir;
+use toml::value::Value;
 
-pub fn link(filename: PathBuf) {
-    let home = home_dir().unwrap();
-    let dotfiles = home.join("dotfiles");
-    let src = dotfiles.join(&filename);
-    let dst = home.join(&filename);
-    fs::hard_link(src, dst).unwrap();
+pub mod app;
+mod item;
+use item::Item;
+
+pub fn load() -> Result<Vec<Item>, std::io::Error> {
+    // let home = home_dir().unwrap();
+    // let dotfiles = home.join("dotfiles");
+    let entries = fs::read_to_string(".dotlinker")?;
+    let entries = entries.parse::<Value>().unwrap();
+    let mut items: Vec<Item> = vec![];
+
+    if let Value::Table(table) = entries {
+        for (key, value) in table.iter() {
+            let mut source: String = String::new();
+            if let Value::String(src) = &value["source"] {
+                source = src.to_string();
+            }
+            let mut target = String::new();
+            if let Value::String(tar) = &value["target"] {
+                target = tar.to_string();
+            }
+            items.push(
+                Item::new(
+                    key,
+                    source,
+                    target,
+                )
+            )
+        }
+    }
+    Ok(items)
 }

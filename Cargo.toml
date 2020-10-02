@@ -9,3 +9,7 @@ edition = "2018"
 [dependencies]
 dirs = "3.0"
 structopt = "0.3"
+termion = "1.5"
+toml = "0.5"
+same-file = "1.0"
+shellexpand = "2.0"

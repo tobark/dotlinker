@@ -1,0 +1,11 @@
+[zshrc]
+source = "~/dotfiles/.zshrc"
+target = "~/.zshrc"
+
+[gitconfig]
+source = "~/dotfiles/.gitconfig"
+target = "~/.gitconfig"
+
+[editorconfig]
+source = "~/dotfiles/.editorconfig"
+target = "~/.editorconfig"
