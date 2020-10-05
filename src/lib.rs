@@ -22,13 +22,7 @@ pub fn load() -> Result<Vec<Item>, std::io::Error> {
             if let Value::String(tar) = &value["target"] {
                 target = tar.to_string();
             }
-            items.push(
-                Item::new(
-                    key,
-                    source,
-                    target,
-                )
-            )
+            items.push(Item::new(key, source, target))
         }
     }
     Ok(items)

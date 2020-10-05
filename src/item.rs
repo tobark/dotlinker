@@ -1,7 +1,7 @@
-use std::path::Path;
-use std::fs;
-use termion::{color, style};
 use same_file::is_same_file;
+use std::fs;
+use std::path::Path;
+use termion::{color, style};
 
 pub struct Item {
     name: String,
@@ -14,11 +14,7 @@ pub struct Item {
 }
 
 impl Item {
-    pub fn new(
-        name: &str,
-        source: String,
-        target: String,
-    ) -> Self {
+    pub fn new(name: &str, source: String, target: String) -> Self {
         let source = shellexpand::tilde(&source).to_string();
         let target = shellexpand::tilde(&target).to_string();
         let source_existence = Path::new(&source).exists();

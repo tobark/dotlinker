@@ -1,8 +1,8 @@
+use std::io::{stdin, stdout};
+use structopt::StructOpt;
 use termion::event::Key;
 use termion::input::TermRead;
 use termion::raw::IntoRawMode;
-use std::io::{stdout, stdin};
-use structopt::StructOpt;
 
 use dotlinker::app::App;
 
@@ -24,19 +24,19 @@ fn main() {
             Key::Char('j') => {
                 app.down();
                 app.render();
-            },
+            }
             Key::Char('k') => {
                 app.up();
                 app.render();
-            },
+            }
             Key::Char('f') => {
                 app.link();
                 app.render();
-            },
+            }
             Key::Char('d') => {
                 app.unlink();
                 app.render();
-            },
+            }
             Key::Ctrl('c') => break,
             _ => (),
         }

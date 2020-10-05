@@ -1,5 +1,5 @@
 use std::io::Write;
-use termion::{color};
+use termion::color;
 
 use crate::item::Item;
 
@@ -22,7 +22,7 @@ where
         Self {
             view,
             index: 0,
-            items
+            items,
         }
     }
 
@@ -53,14 +53,23 @@ where
     }
 
     pub fn render(&mut self) {
-        write!(self.view, "{}{}", termion::cursor::Goto(1, 1), termion::clear::AfterCursor).unwrap();
-        write!(self.view, "{}{}{}Press j, k to move around, f to link, d to unlink, ctrl-c to quit{}{}\r\n",
+        write!(
+            self.view,
+            "{}{}",
+            termion::cursor::Goto(1, 1),
+            termion::clear::AfterCursor
+        )
+        .unwrap();
+        write!(
+            self.view,
+            "{}{}{}Press j, k to move around, f to link, d to unlink, ctrl-c to quit{}{}\r\n",
             termion::cursor::Goto(1, 1),
             termion::color::Fg(color::LightWhite),
             termion::style::Italic,
             termion::color::Fg(color::Reset),
             termion::style::Reset,
-        ).unwrap();
+        )
+        .unwrap();
         for item in &self.items {
             item.render();
         }
@@ -74,6 +83,7 @@ where
             termion::cursor::Goto(1, 1),
             termion::clear::AfterCursor,
             termion::cursor::Show
-        ).unwrap();
+        )
+        .unwrap();
     }
 }
