@@ -78,10 +78,19 @@ impl Item {
         if !self.linked && !self.target_existence {
             fs::hard_link(&self.source, &self.target).unwrap();
         }
-        self.linked = true;
+        self.update();
     }
     pub fn unlink(&mut self) {
         fs::remove_file(&self.target).unwrap();
-        self.linked = false;
+        self.update();
+    }
+    fn update(&mut self) {
+        self.source_existence = Path::new(&self.source).exists();
+        self.target_existence = Path::new(&self.target).exists();
+        if self.source_existence && self.target_existence {
+            self.linked = is_same_file(&self.source, &self.target).unwrap();
+        } else {
+            self.linked = false;
+        }
     }
 }
